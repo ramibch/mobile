@@ -7,7 +7,7 @@
  */
 
 // This is the URL of the service running the Hyperview examples
-export const ENTRY_POINT_URL = 'http://192.168.0.20:8000/dgt/';
+export const ENTRY_POINT_URL = 'https://mobile.ramiboutas.com/dgt/';
 
 export const MAIN_STACK_NAME = 'Main';
 

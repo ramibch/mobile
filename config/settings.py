@@ -39,7 +39,7 @@ ALLOWED_HOSTS = [
     "192.168.0.20",
     "192.168.102.34",
     "192.168.44.154",
-    "dgt.ramiboutas.com",
+    "mobile.ramiboutas.com",
 ]
 
 
