@@ -1,0 +1,29 @@
+{% extends 'layout.xml' %}
+
+{% block header %}
+  <text style="Header__Button"><behavior trigger="press" action="back" href="#" />Atrás</text>
+  <text style="Header__Title">ℹ️ Acerca de la App</text>
+{% endblock header %}
+{% block content %}
+<text style="Info__Title">Autor</text>
+
+<view action="deep-link" href="{{ author_url }}">
+  <text style="Info__TextUrl">{{ author }}</text>
+</view>
+
+<text style="Info__Title">Donar</text>
+<text style="Info__Text">{{ donation_text }}</text>
+{% for label, url in donation_links.items %}
+  <view action="deep-link" href="{{ url }}">
+    <text style="Info__TextUrl">{{ label }}</text>
+  </view>
+{% endfor %}
+
+<text style="Info__Title">Créditos</text>
+<text style="Info__Text">{{ credits_text }}</text>
+
+<view action="deep-link" href="{{ credits_url }}">
+  <text style="Info__TextUrl">{{ credits_url }}</text>
+</view>
+
+{% endblock content %}

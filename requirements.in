@@ -1,0 +1,11 @@
+django
+django-auto-prefetch
+django-hyperview
+beautifulsoup4
+requests
+ipython
+djlint
+black
+gunicorn
+django-dotenv
+pyclean

@@ -1,0 +1,11 @@
+{% load sessiontests %}
+
+{% for test in tests %}
+<view key="{{ test.id }}" style="Test__Item">
+    <behavior trigger="press" action="push" href="{{ test.start_url }}" />
+    <view style="Test__ItemContainer" >
+        <text >{{ test.title }} </text> 
+        <text > {% sessiontest_emojis request test %} </text>  
+    </view>
+</view>
+{% endfor %}

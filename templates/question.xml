@@ -1,0 +1,45 @@
+{% extends 'layout.xml' %}
+{% load hv_tags %}
+{% block header %}
+<text style="Header__Button"><behavior trigger="press" action="back" href="#" />Atrás</text>
+<text style="Header__Title">{{ question.test.title }}</text>
+<text style="Header__Button"><behavior trigger="press" href="{% url 'test-index' %}" />Inicio</text>
+{% endblock header %}
+{% block content %}
+<view id="QuestionContent">
+    <text style="Heading__Title">{{ question.title }}</text>
+    <image source="{{ question.img_url }}" style="Question__Image" />
+    <form> {% hv_csrf_token request %} <select-single name="selected_option" style="Select">
+            <view style="Select__Separator" />
+            <option style="Select__Option" value="a">
+                <text style="Select__Label">{{ question.option_a }}</text>
+                <view style="Select__RadioOuter">
+                    <view style="Select__RadioInner" />
+                </view>
+            </option>
+            <view style="Select__Separator" />
+            <option style="Select__Option" value="b">
+                <text style="Select__Label">{{ question.option_b }}</text>
+                <view style="Select__RadioOuter">
+                    <view style="Select__RadioInner" />
+                </view>
+            </option>
+            <view style="Select__Separator" />
+            <option style="Select__Option" value="c">
+                <text style="Select__Label">{{ question.option_c }}</text>
+                <view style="Select__RadioOuter">
+                    <view style="Select__RadioInner" />
+                </view>
+            </option>
+            <view style="Select__Separator" />
+        </select-single>
+
+        <view id="nextButton"
+            style="BottomSheet__Button">
+            <behavior trigger="press" action="replace" target="QuestionContent"
+                href="{{ question.check_url }}" verb="post" />
+            <text id="saveLabel" style="BottomSheet__ButtonLabel">Siguiente</text>
+        </view>
+    </form>
+</view>
+{% endblock %}
