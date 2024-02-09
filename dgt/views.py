@@ -40,6 +40,10 @@ def question_detail(request, id):
     return render(request, "question.html", context)
 
 
+from django.views.decorators.csrf import csrf_exempt
+
+
+@csrf_exempt
 def check_question(request, id):
     question = Question.objects.get(id=id)
     session, request = get_or_create_session(request)

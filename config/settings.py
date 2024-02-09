@@ -145,6 +145,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 ########### Project settings ###########
 ########################################
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://mobile.ramiboutas.com/",
+]
+
 
 # Https for production environment
 if HTTPS:
