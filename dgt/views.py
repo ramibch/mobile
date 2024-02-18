@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 from django_hv.http import hv_reponde
 
 from .models import Question, SessionQuestion, SessionTest, Test
@@ -39,6 +40,7 @@ def question_detail(request, id):
     return render(request, "dgt/question.html", context)
 
 
+@csrf_exempt
 def check_question(request, id):
     question = Question.objects.get(id=id)
     session, request = get_or_create_session(request)
