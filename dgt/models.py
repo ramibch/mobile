@@ -1,9 +1,8 @@
-from django.db import models
-from django.utils.functional import cached_property
-from django.urls import reverse
-from django.contrib.sessions.models import Session
-
 import auto_prefetch
+from django.contrib.sessions.models import Session
+from django.db import models
+from django.urls import reverse
+from django.utils.functional import cached_property
 
 
 class Test(models.Model):

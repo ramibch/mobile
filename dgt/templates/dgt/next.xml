@@ -1,0 +1,4 @@
+<view xmlns="https://hyperview.org/hyperview" >
+  <behavior trigger="load" once="true" action="reload" href="{{ question.next_question_url }}" />
+  <view style="Spinner"><spinner /></view>
+</view>

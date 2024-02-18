@@ -1,20 +1,19 @@
-from django.shortcuts import render, redirect
-
+from django.shortcuts import render
 from django_hv.http import hv_reponde
 
-from .models import Test, Question, SessionQuestion, SessionTest
-
+from .models import Question, SessionQuestion, SessionTest, Test
 from .utils import get_or_create_session
 
 
 def test_index(request):
     context = {"tests": Test.objects.all()}
     if request.hv:
-        return hv_reponde(render(request, "index.xml", context))
-    return render(request, "index.html", context)
+        return hv_reponde(render(request, "dgt/index.xml", context))
+    return render(request, "dgt/index.html", context)
 
 
 def app_info(request):
+    ## TODO: Move to core
     donation_links = {
         "PayPal": "https://www.paypal.com/paypalme/ramiboutas",
         "buymeacoffee.com": "https://www.buymeacoffee.com/ramiboutas",
@@ -28,16 +27,16 @@ def app_info(request):
         "credits_url": "https://revista.dgt.es/",
     }
     if request.hv:
-        return hv_reponde(render(request, "info.xml", context))
-    return render(request, "info.html", context)
+        return hv_reponde(render(request, "dgt/info.xml", context))
+    return render(request, "dgt/info.html", context)
 
 
 def question_detail(request, id):
     question = Question.objects.get(id=id)
     context = {"question": question}
     if request.hv:
-        return hv_reponde(render(request, "question.xml", context))
-    return render(request, "question.html", context)
+        return hv_reponde(render(request, "dgt/question.xml", context))
+    return render(request, "dgt/question.html", context)
 
 
 def check_question(request, id):
@@ -50,6 +49,7 @@ def check_question(request, id):
         test=question.test,
     )
     context = {"question": question}
+    next_or_done = "next" if question.has_next else "done"
     if not question.has_next:
         session_test = SessionTest.objects.create(session=session, test=question.test)
         session_questions = SessionQuestion.objects.filter(
@@ -61,5 +61,6 @@ def check_question(request, id):
         context["tests"] = Test.objects.all()
 
     if request.hv:
-        return hv_reponde(render(request, "next.xml", context))
-    return render(request, "next.html", context)
+        return hv_reponde(render(request, f"dgt/{next_or_done}.xml", context))
+
+    return render(request, f"dgt/{next_or_done}.html", context)

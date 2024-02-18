@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+    <center>
+        <h1>{{ title }}</h1>
+    </center>
+    <section class="row mb-2">
+        {% for app in apps %}
+            <div class="col-md-4">
+                <article>
+                    <a href="{{ app.page_url }}" title="{{ app.title }}">{{ app.title }}</a>
+                    <footer>
+                        <p>{{ app.description }}</p>
+                        {% if app.download_url %}
+                            <a role="button" href="{{ app.download_url }}">{% trans "Download" %}</a>
+                        {% endif %}
+                    </footer>
+                </article>
+            </div>
+        {% endfor %}
+    </section>
+{% endblock content %}

@@ -1,0 +1,28 @@
+<view xmlns="https://hyperview.org/hyperview" >
+<text style="Heading__Title"> Resultados ({{ session_test.percentage_passed }} %) </text>
+<text style="Test__ResultsText"> {{ session_test.question_list_emojis }} </text>
+{% for session_question in session_test.sessionquestion_set.all %}
+    <view style="Question__ResultsSeparator" />
+    
+    <text style="Question__ResultsTitle">
+        {{ session_question.correct_emoji }} {{ session_question.question.title}}
+    </text>
+    
+    <image source="{{ session_question.question.img_url }}" style="Question__Image" />
+    
+    <text style="Question__ResultsOption">
+        {{ session_question.option_a_emoji }} {{ session_question.question.option_a }}
+    </text>
+    
+    <text style="Question__ResultsOption">
+        {{ session_question.option_b_emoji }} {{ session_question.question.option_b }}
+    </text>
+    
+    <text style="Question__ResultsOption">
+        {{ session_question.option_c_emoji }} {{ session_question.question.option_c }} 
+    </text>
+{% endfor %}
+
+<text style="Heading__Title">Más tests</text>
+{% include 'dgt/test_list.xml' %}
+</view>

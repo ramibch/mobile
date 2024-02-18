@@ -1,5 +1,6 @@
 from django.urls import path
-from dgt import views
+
+from . import views
 
 urlpatterns = [
     path("", views.test_index, name="test-index"),

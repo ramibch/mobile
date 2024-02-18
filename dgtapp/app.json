@@ -2,12 +2,12 @@
   "expo": {
     "name": "DGT tests anteriores",
     "slug": "dgt",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/girl-on-car.gif",
+      "image": "./assets/icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -23,7 +23,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.ramiboutas.dgt"
+      "package": "com.ramiboutas.dgt",
+      "versionCode": 3 
     },
     "web": {
       "favicon": "./assets/favicon.png"

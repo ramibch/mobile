@@ -1,0 +1,8 @@
+{% extends 'layout.xml' %}
+{% block header %}
+  <text style="Header__Title">🚗 Tests anteriores DGT</text>
+  <text style="Header__Button"><behavior trigger="press" action="push" href="{% url 'app-info' %}" />ℹ️ Info</text>
+{% endblock header %}
+{% block content %}
+  {% include 'dgt/test_list.xml' %}
+{% endblock content %}

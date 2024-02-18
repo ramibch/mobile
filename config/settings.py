@@ -11,10 +11,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import os
-import dotenv
-
-
 from pathlib import Path
+
+import dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,19 +39,21 @@ ALLOWED_HOSTS = [
     "192.168.102.34",
     "192.168.44.154",
     "mobile.ramiboutas.com",
+    "127.0.0.1",
 ]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    # "django.contrib.admin",
-    # "django.contrib.messages",
-    # "django.contrib.staticfiles",
+    "django.contrib.admin",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "dgt",
+    "core",
     "django_hv",
 ]
 
@@ -134,6 +135,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
