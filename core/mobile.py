@@ -13,8 +13,7 @@ class MobileApp(object):
         keywords=None,
         download_url=None,
         free=True,
-        credits_text=None,
-        credits_url=None,
+        extra_context={},  # dynamic way to add more context depending on the app
     ) -> None:
         self.slug = slug
         self.free = free
@@ -22,24 +21,24 @@ class MobileApp(object):
         self.subtitle = subtitle
         self.keywords = keywords
         self.download_url = download_url
-        self.credits_text = credits_text
-        self.credits_url = credits_url
+        self.extra_context = extra_context
 
+    @cached_property
     def page_url(self):
         return f"/{self.slug}/"
 
+    @cached_property
     def info_url(self):
         return reverse_lazy("core-appinfo", {"slug": self.slug})
 
     @cached_property
     def context(self):
         return {
+            "index_url": self.page_url,  # TODO: to use in the navbar (or footer?)
             "title": self.title,
             "description": self.subtitle,
             "keywords": self.keywords,
-            "credits_text": self.credits_text,
-            "credits_url": self.credits_url,
-        }
+        } | self.extra_context
 
 
 MOBILE_APPS = (
@@ -47,8 +46,10 @@ MOBILE_APPS = (
         title="DGT Test anteriores",
         slug="dgt",
         download_url="https://ramiboutas.com/mobile/dgt-tests-anteriores/",
-        credits_text="Los tests de esta aplicación están extraidos de la página oficial de la DGT.",
-        credits_url="https://revista.dgt.es/",
+        extra_context={
+            "credits_text": "Los tests de esta aplicación están extraidos de la página oficial de la DGT.",
+            "credits_url": "https://revista.dgt.es/",
+        },
     ),
 )
 
