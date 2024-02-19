@@ -22,9 +22,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 dotenv.read_dotenv(BASE_DIR / ".env")
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
 # HTTPS
 HTTPS = os.environ.get("HTTPS", "") == "1"
 
@@ -33,6 +30,13 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "some-tests-need-a-secret-key")
 
 # SECURITY WARNING: do not run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "") == "1"
+
+# aws s3
+USE_S3 = os.environ.get("USE_S3", "") == "1"
+
+# redis url
+REDIS_URL = os.environ.get("REDIS_TLS_URL", os.environ.get("REDIS_URL"))
+
 
 ALLOWED_HOSTS = [
     "192.168.0.20",
@@ -164,3 +168,54 @@ if HTTPS:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_HSTS_PRELOAD = True
+
+
+# caching
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": REDIS_URL,
+    }
+}
+
+
+# aws settings
+if USE_S3:
+    AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
+    AWS_DEFAULT_ACL = None
+    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+    AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
+    # s3 static settings
+    AWS_STATIC_LOCATION = "mobile/static"
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_STATIC_LOCATION}/"
+    STATIC_STORAGE_BACKEND = "config.storage_backends.StaticStorage"
+    # s3 public media settings
+    AWS_MEDIA_LOCATION = "mobile/media"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_MEDIA_LOCATION}/"
+    MEDIA_STORAGE_BACKEND = "config.storage_backends.PublicMediaStorage"
+
+    STORAGES = {
+        "default": {
+            "BACKEND": MEDIA_STORAGE_BACKEND,
+        },
+        "staticfiles": {
+            "BACKEND": STATIC_STORAGE_BACKEND,
+        },
+    }
+else:
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = BASE_DIR / "media"
+    STATIC_URL = "/static/"
+    STATIC_ROOT = BASE_DIR / "staticfiles"
+
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }

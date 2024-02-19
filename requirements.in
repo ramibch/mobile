@@ -9,3 +9,8 @@ black
 gunicorn
 django-dotenv
 pyclean
+redis
+hiredis
+django-storages
+boto3
+django-huey
