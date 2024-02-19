@@ -8,7 +8,7 @@ from .mobile import MOBILE_APPS
 
 
 @require_GET
-@cache_page(60)
+@cache_page(3600 * 24 * 30)
 def privacy(request, slug):
     path = settings.BASE_DIR / "privacy" / f"{slug}.html"
     if not path.is_file():
@@ -27,12 +27,9 @@ def privacy(request, slug):
 
 
 @require_GET
-@cache_page(60)
+@cache_page(3600 * 24 * 7)
 def home(request):
-    context = {
-        "title": "Apps",
-        "apps": MOBILE_APPS,
-    }
+    context = {"title": "Apps", "apps": MOBILE_APPS}
     return render(request, "core/home.html", context)
 
 

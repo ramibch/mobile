@@ -13,7 +13,7 @@ class MobileApp(object):
 
 MOBILE_APPS = (
     MobileApp(
-        title="Hello",
+        title="DGT Test anteriores",
         slug="dgt",
         download_url="https://ramiboutas.com/mobile/dgt-tests-anteriores/",
     ),
