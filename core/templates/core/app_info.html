@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+    <center>
+        <h1>{{ title }}</h1>
+    </center>
+    <!-- Author -->
+    <h2>{% trans "Author" %}</h2>
+    <p>
+        <a href="{{ author_url }}">{{ author }}</a>
+    </p>
+    <!-- Donation -->
+    <h2>{% trans "Donate" %}</h2>
+    {% for label, url in donation_links.items %}
+        <p>
+            <a href="{{ url }}">{{ label }}</a>
+        </p>
+    {% endfor %}
+    <!-- Credits -->
+    {% if credits_text and  credits_url %}
+        <h2>{% trans "Credits" %}</h2>
+        <p>{{ credits_text }}</p>
+        <p>
+            <a href="{{ credits_url }}">{{ credits_url }}</a>
+        </p>
+    {% endif %}
+{% endblock content %}

@@ -4,7 +4,25 @@ from django.shortcuts import render
 from django.views.decorators.cache import cache_control, cache_page
 from django.views.decorators.http import require_GET
 
-from .mobile import MOBILE_APPS
+from .mobile import MOBILE_APPS, get_app
+
+
+def home(request):
+    context = {"title": "Apps", "apps": MOBILE_APPS}
+    return render(request, "core/home.html", context)
+
+
+def app_info(request, slug):
+    context = get_app(slug).context | {
+        "author": "Rami Boutassghount",
+        "author_url": "https://ramiboutas.com/bio/",
+        "donation_links": {
+            "PayPal": "https://www.paypal.com/paypalme/ramiboutas",
+            "buymeacoffee.com": "https://www.buymeacoffee.com/ramiboutas",
+        },
+    }
+    xml_or_html = "xml" if request.hv else "html"
+    return render(request, f"core/app_info.{xml_or_html}", context)
 
 
 @require_GET
@@ -13,10 +31,8 @@ def privacy(request, slug):
     path = settings.BASE_DIR / "privacy" / f"{slug}.html"
     if not path.is_file():
         raise Http404
-
     with open(path, "r", encoding="utf-8") as f:
         body = f.read()
-
     context = {
         "title": "Privacy Policy",
         "keywords": "privacy, policy, law, compliance, legal",
@@ -24,13 +40,6 @@ def privacy(request, slug):
         "body": body,
     }
     return render(request, "core/privacy.html", context)
-
-
-@require_GET
-@cache_page(3600 * 24 * 7)
-def home(request):
-    context = {"title": "Apps", "apps": MOBILE_APPS}
-    return render(request, "core/home.html", context)
 
 
 @require_GET

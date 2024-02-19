@@ -2,12 +2,14 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django_hv.http import hv_reponde
 
+from core.mobile import get_app
+
 from .models import Question, SessionQuestion, SessionTest, Test
 from .utils import get_or_create_session
 
 
 def test_index(request):
-    context = {"tests": Test.objects.all()}
+    context = {"app": get_app("dgt"), "tests": Test.objects.all()}
     if request.hv:
         return hv_reponde(render(request, "dgt/index.xml", context))
     return render(request, "dgt/index.html", context)
@@ -34,7 +36,7 @@ def app_info(request):
 
 def question_detail(request, id):
     question = Question.objects.get(id=id)
-    context = {"question": question}
+    context = {"app": get_app("dgt"), "question": question}
     if request.hv:
         return hv_reponde(render(request, "dgt/question.xml", context))
     return render(request, "dgt/question.html", context)
@@ -50,7 +52,7 @@ def check_question(request, id):
         selected_option=request.POST.get("selected_option", ""),
         test=question.test,
     )
-    context = {"question": question}
+    context = {"app": get_app("dgt"), "question": question}
     next_or_done = "next" if question.has_next else "done"
     if not question.has_next:
         session_test = SessionTest.objects.create(session=session, test=question.test)

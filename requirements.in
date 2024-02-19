@@ -14,3 +14,5 @@ hiredis
 django-storages
 boto3
 django-huey
+huey
+django-rosetta

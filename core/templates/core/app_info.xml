@@ -1,0 +1,23 @@
+{% extends 'layout.xml' %}
+{% load i18n %}
+{% block header %}
+  <text style="Header__Button"><behavior trigger="press" action="back" href="#" />{% trans "Back" %}</text>
+  <text style="Header__Title">ℹ️ {% trans "Info" %}</text>
+{% endblock header %}
+{% block content %}
+  <text style="Info__Title">{% trans "Author" %}</text>
+  <view action="deep-link" href="{{ author_url }}">
+  <text style="Info__TextUrl">{{ author }}</text>
+  </view>
+  <text style="Info__Title">{% trans "Donate" %}</text>
+  {% for label, url in donation_links.items %}
+    <view action="deep-link" href="{{ url }}">
+    <text style="Info__TextUrl">{{ label }}</text>
+    </view>
+  {% endfor %}
+  <text style="Info__Title">{% trans "Credits" %}</text>
+  <text style="Info__Text">{{ credits_text }}</text>
+  <view action="deep-link" href="{{ credits_url }}">
+  <text style="Info__TextUrl">{{ credits_url }}</text>
+  </view>
+{% endblock content %}

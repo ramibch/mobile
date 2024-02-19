@@ -17,12 +17,13 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 
 urlpatterns = [
     path("abcdef/", admin.site.urls),
-    path("", include("core.urls")),
     path("dgt/", include("dgt.urls")),
+    re_path(r"^rosetta/", include("rosetta.urls")),
+    path("", include("core.urls")),
 ]
 
 

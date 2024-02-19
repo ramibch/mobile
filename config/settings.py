@@ -50,15 +50,20 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    # Django contrib apps
     "django.contrib.admin",
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
+    # Own apps
     "dgt",
     "core",
+    # Third-party apps
     "django_hv",
+    "huey.contrib.djhuey",
+    "rosetta",
 ]
 
 MIDDLEWARE = [
@@ -149,6 +154,19 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+
+########################################
+######### Third-party settings #########
+########################################
+
+
+# rosetta
+ROSETTA_ENABLE_TRANSLATION_SUGGESTIONS = True
+ROSETTA_WSGI_AUTO_RELOAD = True
+
+
+# DeepL API
+DEEPL_AUTH_KEY = os.environ.get("DEEPL_AUTH_KEY", "")
 
 ########################################
 ########### Project settings ###########
