@@ -2,20 +2,31 @@
 {% load i18n %}
 {% block content %}
     <center>
-        <h1>{{ title }}</h1>
+        <h1>{{ page.title }}</h1>
     </center>
-    <section class="row mb-2">
-        {% for app in apps %}
+    <section class="row my-5">
+        {% for app in mobile_apps %}
             <div class="col-md-4">
-                <article>
-                    <a href="{{ app.page_url }}" title="{{ app.title }}">{{ app.title }}</a>
-                    <footer>
-                        <p>{{ app.description }}</p>
-                        {% if app.download_url %}
-                            <a role="button" href="{{ app.download_url }}">{% trans "Download" %}</a>
+                <center>
+                    <article>
+                        <header>
+                            <a href="{{ app.page_url }}" title="{{ app.title }}">{{ app.title }}</a>
+                        </header>
+                        {% if app.icon_url %}
+                            <a href="{{ app.page_url }}" title="{{ app.title }}">
+                                <img src="{{ app.icon_url }}" alt="Icon {{ app.title }} " />
+                            </a>
                         {% endif %}
-                    </footer>
-                </article>
+                        {% if app.description %}<small>{{ app.description }}</small>{% endif %}
+                        <footer>
+                            {% if app.download_url %}
+                                <small>
+                                    📲 <a href="{{ app.download_url }}">{% trans "Download" %}</a>
+                                </small>
+                            {% endif %}
+                        </footer>
+                    </article>
+                </center>
             </div>
         {% endfor %}
     </section>

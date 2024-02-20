@@ -1,26 +1,26 @@
 from django.conf import settings
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import render
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.cache import cache_control, cache_page
 from django.views.decorators.http import require_GET
 
-from .mobile import MOBILE_APPS, get_app
+from .mobile import get_app
+from .pages import Page
 
 
 def home(request):
-    context = {"title": "Apps", "apps": MOBILE_APPS}
+    page = Page(
+        title=_("Apps"),
+        keywords=_("App, App Store, Google, Apple, Google Play, Mobile, Mobile App"),
+        description=_("List of all of my developed mobile apps"),
+    )
+    context = {"page": page}
     return render(request, "core/home.html", context)
 
 
 def app_info(request, slug):
-    context = get_app(slug).context | {
-        "author": "Rami Boutassghount",
-        "author_url": "https://ramiboutas.com/bio/",
-        "donation_links": {
-            "PayPal": "https://www.paypal.com/paypalme/ramiboutas",
-            "buymeacoffee.com": "https://www.buymeacoffee.com/ramiboutas",
-        },
-    }
+    context = {"app": get_app(slug)}
     xml_or_html = "xml" if request.hv else "html"
     return render(request, f"core/app_info.{xml_or_html}", context)
 
@@ -33,12 +33,17 @@ def privacy(request, slug):
         raise Http404
     with open(path, "r", encoding="utf-8") as f:
         body = f.read()
-    context = {
-        "title": "Privacy Policy",
-        "keywords": "privacy, policy, law, compliance, legal",
-        "description": "Detail of the Privacy Policy of the App",
-        "body": body,
-    }
+
+    app = get_app(slug)
+
+    page = Page(
+        app=app,
+        title=_("Privacy Policy"),
+        merge=True,
+        keywords=_("privacy, policy, law, compliance, legal"),
+        description=_("Detail of the Privacy Policy of the App"),
+    )
+    context = {"page": page, "body": body}
     return render(request, "core/privacy.html", context)
 
 
