@@ -31,7 +31,11 @@ class MobileApp(object):
 
     @cached_property
     def info_url(self):
-        return reverse_lazy("core-appinfo", {"slug": self.slug})
+        return reverse_lazy("appinfo", kwargs={"slug": self.slug})
+
+    @cached_property
+    def privacy_url(self):
+        return reverse_lazy("privacy", kwargs={"slug": self.slug})
 
 
 MOBILE_APPS = (

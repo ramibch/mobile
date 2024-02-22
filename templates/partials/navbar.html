@@ -1,0 +1,18 @@
+{% load i18n %}
+{% if app or page.app %}
+  <nav class="container">
+    <ul>
+      <li>
+        <a href="{{ app.page_url }}">{% trans "Home" %}</a>
+      </li>
+    </ul>
+    <ul>
+      <li>
+        <a href="{{ app.info_url }}">{% trans "Info" %}</a>
+      </li>
+      <li>
+        <a href="/">{% trans "More Apps" %}</a>
+      </li>
+    </ul>
+  </nav>
+{% endif %}

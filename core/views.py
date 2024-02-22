@@ -43,7 +43,7 @@ def privacy(request, slug):
         keywords=_("privacy, policy, law, compliance, legal"),
         description=_("Detail of the Privacy Policy of the App"),
     )
-    context = {"page": page, "body": body}
+    context = {"app": app, "page": page, "body": body}
     return render(request, "core/privacy.html", context)
 
 
