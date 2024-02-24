@@ -26,8 +26,11 @@ class MobileApp(object):
         self.extra_attrs = extra_attrs
 
     @cached_property
-    def page_url(self):
+    def index_url(self):
         return f"/{self.slug}/"
+
+    def get_absolute_url(self):
+        return self.index_url
 
     @cached_property
     def info_url(self):
@@ -38,14 +41,14 @@ class MobileApp(object):
         return reverse_lazy("privacy", kwargs={"slug": self.slug})
 
 
-MOBILE_APPS = (
+APPS = (
     MobileApp(
         title="DGT Test anteriores",
         slug="dgt",
         download_url="https://ramiboutas.com/mobile/dgt-tests-anteriores/",
         icon_url="https://ramiboutas.s3.amazonaws.com/stuff/media/mobile/dgt-tests-anteriores/icon/icon.png",
         extra_attrs={
-            "credits_text": "Los tests de esta aplicación están extraidos de la página oficial de la DGT.",
+            "credits_text": "Los tests de esta aplicación están extraidos de la página oficial de la DGT....",
             "credits_url": "https://revista.dgt.es/",
         },
     ),
@@ -54,6 +57,6 @@ MOBILE_APPS = (
 
 @cache
 def get_app(slug):
-    for app in MOBILE_APPS:
+    for app in APPS:
         if app.slug == slug:
             return app

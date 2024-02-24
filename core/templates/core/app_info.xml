@@ -15,9 +15,11 @@
     <text style="Info__TextUrl">{{ label }}</text>
     </view>
   {% endfor %}
-  <text style="Info__Title">{% trans "Credits" %}</text>
-  <text style="Info__Text">{{ credits_text }}</text>
-  <view action="deep-link" href="{{ credits_url }}">
-  <text style="Info__TextUrl">{{ credits_url }}</text>
+  {% if obj.extra_attrs.credits_text %}
+    <text style="Info__Title">{% trans "Credits" %}</text>
+    <text style="Info__Text">{{ obj.extra_attrs.credits_text }}</text>
+    <view action="deep-link" href="{{ obj.extra_attrs.credits_url }}">
+    <text style="Info__TextUrl">{{ obj.extra_attrs.credits_url }}</text>
+  {% endif %}
   </view>
 {% endblock content %}

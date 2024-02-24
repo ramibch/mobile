@@ -1,0 +1,38 @@
+{% load static i18n %}
+<!-- modals -->
+{% if request.path != "/" %}
+  <dialog open
+          x-cloak
+          x-data="{ show : false, {{ obj.slug }}ModalShowed : $persist(false)}"
+          x-init="setTimeout(() => {show = true; }, 15000)"
+          x-show="show && !{{ obj.slug }}ModalShowed"
+          x-transition>
+    <article x-on:click.outside="show = false; {{ obj.slug }}ModalShowed = true;">
+      <center>
+        <header>
+          <strong>{% trans "Download the App in your Smartphone!" %}</strong>
+          <a href="#close"
+             aria-label="Close"
+             class="close"
+             x-on:click="show = false; {{ obj.slug }}ModalShowed = true;"></a>
+        </header>
+        {% if obj.icon_url %}
+          <a href="{{ obj.index_url }}" title="{{ obj.title }}">
+            <img src="{{ obj.icon_url }}"
+                 width="200"
+                 height="200"
+                 alt="Icon {{ obj.title }} " />
+          </a>
+        {% endif %}
+        <br>
+        {% if obj.description %}<small>{{ obj.description }}</small>{% endif %}
+        <br>
+        {% if obj.download_url %}
+          <footer class="grid mt-5">
+            <a role="button" href="{{ obj.download_url }}">📲 {% trans "Download" %}</a>
+          </footer>
+        {% endif %}
+      </center>
+    </article>
+  </dialog>
+{% endif %}

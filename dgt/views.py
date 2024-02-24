@@ -7,38 +7,18 @@ from core.mobile import get_app
 from .models import Question, SessionQuestion, SessionTest, Test
 from .utils import get_or_create_session
 
+APP = get_app("dgt")
+
 
 def test_index(request):
-    app = get_app("dgt")
-    context = {"page": app, "app": app, "tests": Test.objects.all()}
-    if request.hv:
-        return hv_reponde(render(request, "dgt/index.xml", context))
-    return render(request, "dgt/index.html", context)
-
-
-def app_info(request):
-    ## TODO: Move to core
-    donation_links = {
-        "PayPal": "https://www.paypal.com/paypalme/ramiboutas",
-        "buymeacoffee.com": "https://www.buymeacoffee.com/ramiboutas",
-    }
-    context = {
-        "author": "Rami Boutassghount",
-        "author_url": "https://ramiboutas.com/bio/",
-        "donation_text": "Si te gusta la aplicación y quieres apoyar mi trabajo, puedes hacer una pequeña donación:",
-        "donation_links": donation_links,
-        "credits_text": "Los tests de esta aplicación están extraidos de la página oficial de la DGT.",
-        "credits_url": "https://revista.dgt.es/",
-    }
-    if request.hv:
-        return hv_reponde(render(request, "dgt/info.xml", context))
-    return render(request, "dgt/info.html", context)
+    context = {"obj": APP, "tests": Test.objects.all()}
+    xml_or_html = "xml" if request.hv else "html"
+    return render(request, f"dgt/index.{xml_or_html}", context)
 
 
 def question_detail(request, id):
     question = Question.objects.get(id=id)
-    app = get_app("dgt")
-    context = {"page": app, "app": app, "question": question}
+    context = {"obj": APP, "question": question}
     if request.hv:
         return hv_reponde(render(request, "dgt/question.xml", context))
     return render(request, "dgt/question.html", context)
@@ -54,13 +34,13 @@ def check_question(request, id):
         selected_option=request.POST.get("selected_option", ""),
         test=question.test,
     )
-    app = get_app("dgt")
-    context = {"app": app, "page": app, "question": question}
+    context = {"obj": APP, "question": question}
 
     if request.method == "GET":
         return redirect(question.detail_url)
 
     next_or_done = "next" if question.has_next else "done"
+    xml_or_html = "xml" if request.hv else "html"
     if not question.has_next:
         session_test = SessionTest.objects.create(session=session, test=question.test)
         session_questions = SessionQuestion.objects.filter(
@@ -70,7 +50,4 @@ def check_question(request, id):
         context["session_test"] = session_test
         context["tests"] = Test.objects.all()
 
-    if request.hv:
-        return hv_reponde(render(request, f"dgt/{next_or_done}.xml", context))
-
-    return render(request, f"dgt/{next_or_done}.html", context)
+    return render(request, f"dgt/{next_or_done}.{xml_or_html}", context)

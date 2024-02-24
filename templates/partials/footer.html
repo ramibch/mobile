@@ -46,8 +46,8 @@
     <center class="mt-4">
       <small>
         <a href="{{ author_url }}"target="_blank">&copy; {{ current_year }} {{ author }}</a>
-        {% if app %}
-          |  <a href="{{ app.privacy_url }}">{% trans "Privacy Policy" %}</a>
+        {% if obj.privacy_url %}
+          |  <a href="{{ obj.privacy_url }}">{% trans "Privacy Policy" %}</a>
         {% endif %}
       </small>
     </center>

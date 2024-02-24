@@ -42,6 +42,7 @@ ALLOWED_HOSTS = [
     "192.168.0.20",
     "192.168.102.34",
     "192.168.44.154",
+    "192.168.0.150",
     "mobile.ramiboutas.com",
     "127.0.0.1",
 ]
@@ -57,6 +58,7 @@ INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
+    "django.contrib.sitemaps",
     # Own apps
     "dgt",
     "core",

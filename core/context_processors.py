@@ -1,12 +1,12 @@
 from django.utils import timezone
 
-from .mobile import MOBILE_APPS
+from .mobile import APPS
 
 
 def site(request):
     return {
         "request": request,
-        "mobile_apps": MOBILE_APPS,
+        "mobile_apps": APPS,
         "current_year": timezone.now().year,
         "author": "Rami Boutassghount",
         "author_url": "https://ramiboutas.com/bio/",

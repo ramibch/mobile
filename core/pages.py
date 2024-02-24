@@ -1,3 +1,5 @@
+from django.utils.functional import cached_property
+
 from .mobile import MobileApp
 
 
@@ -16,3 +18,11 @@ class Page(object):
         else:
             self.title = title
             self.keywords = keywords
+
+    @cached_property
+    def index_url(self):
+        return self.app.index_url
+
+    @cached_property
+    def info_url(self):
+        return self.app.info_url
