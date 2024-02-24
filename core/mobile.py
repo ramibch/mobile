@@ -14,6 +14,7 @@ class MobileApp(object):
         icon_url=None,
         download_url=None,
         free=True,
+        promote_in_modal=True,
         extra_attrs={},
     ) -> None:
         self.slug = slug
@@ -22,6 +23,7 @@ class MobileApp(object):
         self.description = description
         self.icon_url = icon_url
         self.keywords = keywords
+        self.promote_in_modal = promote_in_modal
         self.download_url = download_url
         self.extra_attrs = extra_attrs
 

@@ -1,6 +1,6 @@
 {% load static i18n %}
 <!-- modals -->
-{% if request.path != "/" %}
+{% if obj.promote_in_modal %}
   <dialog open
           x-cloak
           x-data="{ show : false, {{ obj.slug }}ModalShowed : $persist(false)}"
