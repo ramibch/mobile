@@ -1,13 +1,13 @@
 {% load i18n %}
 <footer style="background-color: #F5FEF8;">
   <div class="container row">
-    <aside class="col-md-4">
+    <aside class="col-md-3">
       <p>
-        <strong>🤝 {% trans "Donate" %}</strong>
+        <strong>🤝 {% trans "Support my work" %}</strong>
       </p>
       <nav>
         <ul>
-          {% for label, url in donation_links.items %}
+          {% for label, url in support_links.items %}
             <li>
               <a href="{{ url }}"target="_blank">{{ label }}</a>
             </li>
@@ -15,7 +15,7 @@
         </ul>
       </nav>
     </aside>
-    <aside class="col-md-4">
+    <aside class="col-md-3">
       <p>
         <strong>👥 {% trans "My social links" %}</strong>
       </p>
@@ -23,13 +23,27 @@
         <ul>
           {% for label, url in social_links.items %}
             <li>
-              <a href="{{ url }}"target="_blank">{{ label }}</a>
+              <a href="{{ url }}" target="_blank">{{ label }}</a>
             </li>
           {% endfor %}
         </ul>
       </nav>
     </aside>
-    <aside class="col-md-4">
+    <aside class="col-md-3">
+      <p>
+        <strong>👥 {% trans "Contact me" %}</strong>
+      </p>
+      <nav>
+        <ul>
+          {% for label, url in contact_links.items %}
+            <li>
+              <a href="{{ url }}">{{ label }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </aside>
+    <aside class="col-md-3">
       <p>
         <strong>🚀 {% trans "Other projects" %}</strong>
       </p>
